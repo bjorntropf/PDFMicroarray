@@ -1,0 +1,50 @@
+{
+  "[markdown]": {
+    "editor.rulers": [
+      80
+    ],
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 80
+  },
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  },
+  "cSpell.enabled": true,
+  "cSpell.words": [
+    "annot",
+    "axhline",
+    "axvline",
+    "cbar",
+    "cmap",
+    "cornflowerblue",
+    "dataframe",
+    "dataframes",
+    "dtype",
+    "figsize",
+    "fitz",
+    "frombytes",
+    "horizontalalignment",
+    "linewidths",
+    "microarray",
+    "pipx",
+    "pixmap",
+    "pyproject",
+    "pytesseract",
+    "pytest",
+    "thefuzz",
+    "xaxis",
+    "xticklabels"
+  ],
+  "isort.args": [
+    "--profile",
+    "black"
+  ],
+  "ltex.language": "de-DE",
+  "notebook.formatOnSave.enabled": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "python.languageServer": "Pylance",
+}
