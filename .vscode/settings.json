@@ -39,6 +39,7 @@
     "pyproject",
     "pytesseract",
     "pytest",
+    "tesseract",
     "thefuzz",
     "xaxis",
     "xticklabels"

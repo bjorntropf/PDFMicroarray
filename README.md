@@ -16,6 +16,8 @@ The processed text can then analyzed using the [Levenshtein distance](https://en
 
 ## Installation
 
+[Tesseract](https://github.com/tesseract-ocr/tesseract) is required for this CLI tool. Please follow the [installation](https://tesseract-ocr.github.io/tessdoc/Installation.html) instructions for your platform.
+
 ```bash
 pip install pipx
 pipx install pdf-microarray
