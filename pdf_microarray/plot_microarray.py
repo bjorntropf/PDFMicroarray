@@ -4,6 +4,8 @@ dataframes, representing occurrences of specific words in scientific literature
 as processed and analyzed by the PDFMicroarray class.
 """
 
+import os
+
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sns
@@ -22,12 +24,13 @@ class PlotMicroarray:
         image_path=None,
         threshold=90,
         empty=False,
+        split=60,
         width=60,
         height=30,
     ):
         """
-        Plots a microarray of the provided dataframe using a predefined color
-        palette.
+        Plots one or multiple microarrays of the provided dataframe using a
+        predefined color palette.
 
         Args:
             data_path (str): Path to the CSV file containing data to plot.
@@ -40,6 +43,8 @@ class PlotMicroarray:
             False.
             width (int): Width of the figure in inches. Defaults to 60.
             height (int): Height of the figure in inches. Defaults to 30.
+            split (int, optional): Maximum number of rows each plot should
+            have. Defaults to 60.
         """
 
         df = pd.read_csv(data_path, index_col=0, dtype={0: str})
@@ -48,6 +53,33 @@ class PlotMicroarray:
         if not empty:
             df = df.loc[~(df == 0).all(axis=1)]
 
+        split_dfs = cls._split_dataframe(df, split)
+        if len(split_dfs) > 1:
+            for idx, split_df in enumerate(split_dfs):
+                if image_path:
+                    img_base, img_ext = os.path.splitext(image_path)
+                    split_path = f"{img_base}_{idx+1}{img_ext}"
+                else:
+                    split_path = None
+                cls._plot_dataframe(split_df, split_path, width, height)
+        else:
+            cls._plot_dataframe(df, image_path, width, height)
+
+    @classmethod
+    def _split_dataframe(cls, df, split):
+        number_of_splits = (len(df) + split - 1) // split
+        split_dfs = []
+        for idx in range(number_of_splits):
+            start_row = idx * split
+            end_row = min(start_row + split, len(df))
+
+            split_df = df.iloc[start_row:end_row]
+            split_dfs.append(split_df)
+
+        return split_dfs
+
+    @classmethod
+    def _plot_dataframe(cls, df, image_path, width, height):
         plt.rcParams["font.family"] = "Times New Roman"
         plt.rcParams["font.size"] = "9"
         plt.rcParams["figure.figsize"] = (width, height)
@@ -84,3 +116,5 @@ class PlotMicroarray:
             plt.show()
         else:
             plt.savefig(image_path, dpi=300, bbox_inches="tight")
+
+        plt.close()

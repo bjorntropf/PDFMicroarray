@@ -67,8 +67,10 @@ L_INPUT = "Path to the CSV file containing data to be visualized."
 L_WIDTH = "Width of the generated plot in inches. Defaults to 60."
 L_THRESHOLD = "Minimum score (0-100) to consider a word match using \
 Levenshtein distance. Defaults to 90."
-L_EMPTY = "If enabled, shows all rows where no word matches have been \
-found. Defaults to False."
+L_EMPTY = "If enabled, shows all rows where no word matches have been found. \
+Defaults to False."
+L_SPLIT = "Maximum number of rows each generated plot should have. \
+Defaults to 60."
 L_HEIGHT = "Height of the generated plot in inches. Defaults to 30."
 L_OUTPUT = "Optional path to save the generated plot image as a PNG file."
 
@@ -78,9 +80,10 @@ L_OUTPUT = "Optional path to save the generated plot image as a PNG file."
 @click.option("-o", "--output", default=None, help=L_OUTPUT)
 @click.option("--threshold", type=int, default=90, help=L_THRESHOLD)
 @click.option("--empty", is_flag=True, default=False, help=L_EMPTY)
+@click.option("--split", type=int, default=60, help=L_SPLIT)
 @click.option("--width", type=int, default=60, help=L_WIDTH)
 @click.option("--height", type=int, default=30, help=L_HEIGHT)
-def plot(input, output, threshold, empty, width, height):
+def plot(input, output, threshold, empty, split, width, height):
     """
     Plots the analysis results from the given CSV file, visualizing the data
     in a microarray format.
@@ -90,6 +93,7 @@ def plot(input, output, threshold, empty, width, height):
         image_path=output,
         threshold=threshold,
         empty=empty,
+        split=split,
         width=width,
         height=height,
     )
