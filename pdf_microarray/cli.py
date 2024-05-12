@@ -6,17 +6,19 @@ extracted from PDF documents, enabling literature research through a terminal
 interface.
 """
 
-
 import click
 
 from pdf_microarray.pdf_microarray import PDFMicroarray
 from pdf_microarray.plot_microarray import PlotMicroarray
+
+VERSION = "1.0.0"
 
 DIR = click.Path(exists=True, dir_okay=True)
 FILE = click.Path(exists=True, file_okay=True)
 
 
 @click.group()
+@click.version_option(version=VERSION)
 def cli():
     """
     Command line interface for managing PDF data extraction, analysis, and
