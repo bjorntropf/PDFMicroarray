@@ -12,7 +12,7 @@ authors:
     family-names: Tropf
   - given-names: Jan
     family-names: Tropf
-repository-code: 'https://github.com/bjorntropf/PDFMicroarray'
+repository-code: "https://github.com/bjorntropf/PDFMicroarray"
 abstract: >-
   A Python CLI tool designed to assist with literature
   research by visualizing the occurrence of words in PDF
@@ -26,4 +26,4 @@ keywords:
 license: GPL-3.0-or-later
 commit: 4b6b75d
 version: 1.0.0
-date-released: '2024-05-01'
+date-released: "2024-05-01"
