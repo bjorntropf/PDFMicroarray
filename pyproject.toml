@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "pdf-microarray"
-version = "1.0.0"
+version = "1.0.1"
 description = "A Python CLI tool designed to assist with literature research by visualizing the occurrence of words in PDF documents with a microarray format."
 authors = [
     "Björn Tropf",

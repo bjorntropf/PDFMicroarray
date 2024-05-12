@@ -11,7 +11,7 @@ import click
 from pdf_microarray.pdf_microarray import PDFMicroarray
 from pdf_microarray.plot_microarray import PlotMicroarray
 
-VERSION = "1.0.0"
+VERSION = "1.0.1"
 
 DIR = click.Path(exists=True, dir_okay=True)
 FILE = click.Path(exists=True, file_okay=True)
