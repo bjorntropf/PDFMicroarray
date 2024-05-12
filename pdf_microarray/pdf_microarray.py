@@ -103,7 +103,7 @@ class PDFMicroarray:
         words = cls._get_words(words_path)
 
         df = cls._calculate_scores(text, words)
-        df.map(lambda x: 1 if x >= threshold else 0)
+        df = (df >= threshold).astype(int)
 
         df.to_csv(data_path)
 
