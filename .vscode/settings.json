@@ -19,6 +19,7 @@
     "axhline",
     "axvline",
     "cbar",
+    "cffinit",
     "cmap",
     "cornflowerblue",
     "dataframe",
