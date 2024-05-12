@@ -15,7 +15,7 @@ def test_process():
 def test_analyze():
     PDFMicroarray.analyze(
         ".debug/processed",
-        ".debug/documents/words.txt",
+        ".debug/words.txt",
         ".debug/data.csv",
     )
 
