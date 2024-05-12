@@ -1,5 +1,6 @@
 # pylint: disable=C0114,C0116
 from pdf_microarray.pdf_microarray import PDFMicroarray
+from pdf_microarray.plot_microarray import PlotMicroarray
 
 
 def test_process():
@@ -15,16 +16,16 @@ def test_analyze():
     PDFMicroarray.analyze(
         ".debug/processed",
         ".debug/documents/words.txt",
-        ".debug/processed/data.csv",
+        ".debug/data.csv",
     )
 
     assert True
 
 
 def test_plot():
-    PDFMicroarray.plot(
-        ".debug/processed/data.csv",
-        ".debug/processed/plot.png",
+    PlotMicroarray.plot(
+        ".debug/data.csv",
+        ".debug/plot.png",
     )
 
     assert True
