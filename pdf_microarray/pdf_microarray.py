@@ -1,8 +1,7 @@
 """
 Provides functionality for extracting and analyzing text from PDF documents,
-by using the Levenshtein distance to search for specific words, visualizing
-the results in a microarray plot format. It offers efficient processing by
-segmenting documents and utilizing multithreading.
+by using the Levenshtein distance to search for specific words. It offers
+efficient processing by segmenting documents and utilizing multithreading.
 """
 
 import os
@@ -16,7 +15,6 @@ import pandas as pd
 from thefuzz import fuzz
 
 from pdf_microarray.pdf_extract import PDFExtract, PDFInfo
-from pdf_microarray.plot_microarray import PlotMicroarray
 
 
 class Segment(NamedTuple):
@@ -43,7 +41,7 @@ class PDFMicroarray:
     """
 
     @classmethod
-    def process(cls, documents_path, processed_path, skip=False, threads=-1):
+    def process(cls, documents_path, processed_path, threads=-1, force=False):
         """
         Processes PDF documents into text, splitting them into segments to
         improve the extraction performance.
@@ -52,17 +50,17 @@ class PDFMicroarray:
             documents_path (str): Path to the directory containing PDF files.
             processed_path (str): Directory where processed segments are to be
             stored.
-            skip (bool): Whether to skip already processed documents.
-            Defaults to False.
             threads (int): Number of concurrent threads to use. Defaults to -1,
             which uses all available CPU cores.
+            force (bool): Whether to force the processing of already processed
+            documents. Defaults to False.
         """
 
         documents = cls._get_documents(documents_path)
         threads = os.cpu_count() if threads == -1 else threads
 
         document_segments = cls._compute_segments(
-            documents, processed_path, skip, max_pages=20
+            documents, processed_path, max_pages=20, force=force
         )
 
         print(
@@ -86,7 +84,7 @@ class PDFMicroarray:
         )
 
     @classmethod
-    def analyze(cls, processed_path, words_path, data_path, threshold=90):
+    def analyze(cls, processed_path, words_path, data_path):
         """
         Analyzes extracted text using the Levenshtein distance to find the
         occurrence of specific words.
@@ -95,38 +93,17 @@ class PDFMicroarray:
             processed_path (str): Path where processed segments are stored.
             words_path (str): Path to a file containing words to search for.
             data_path (str): Path where the results dataframe will be saved.
-            threshold (int): Minimum Levenshtein distance score (0-100) to
-            consider a match. Defaults to 90.
         """
 
         text = cls._get_processed_text(processed_path)
         words = cls._get_words(words_path)
 
         df = cls._calculate_scores(text, words)
-        df = (df >= threshold).astype(int)
 
         df.to_csv(data_path)
 
     @classmethod
-    def plot(cls, data_path, image_path=None, width=30, height=60):
-        """
-        Generates a plot representing data as a microarray.
-
-        Args:
-            data_path (str): Path to the CSV file containing data to plot.
-            image_path (str): Path where the plot image will be saved.
-            If None, the plot is just displayed. Defaults to None.
-            width (int): Width of the plot. Defaults to 30.
-            height (int): Height of the plot. Defaults to 60.
-        """
-        df = pd.read_csv(data_path, index_col=0, dtype={0: str})
-
-        return PlotMicroarray.plot(
-            df, image_path=image_path, width=width, height=height
-        )
-
-    @classmethod
-    def _compute_segments(cls, documents, processed_path, skip, max_pages):
+    def _compute_segments(cls, documents, processed_path, max_pages, force):
         document_segments = []
 
         for document_path in documents:
@@ -141,7 +118,7 @@ class PDFMicroarray:
                     document_path, processed_path, first_page, last_page
                 )
 
-                if skip and os.path.exists(doc_proc_path):
+                if os.path.exists(doc_proc_path) and not force:
                     print(
                         f"Skipping {document_path}",
                         f"(pages {first_page + 1}-{last_page + 1})",

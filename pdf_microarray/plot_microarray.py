@@ -5,6 +5,7 @@ as processed and analyzed by the PDFMicroarray class.
 """
 
 import matplotlib.pyplot as plt
+import pandas as pd
 import seaborn as sns
 
 
@@ -15,19 +16,37 @@ class PlotMicroarray:
     """
 
     @classmethod
-    def plot(cls, df, image_path=None, width=60, height=30):
+    def plot(
+        cls,
+        data_path,
+        image_path=None,
+        threshold=90,
+        empty=False,
+        width=60,
+        height=30,
+    ):
         """
         Plots a microarray of the provided dataframe using a predefined color
         palette.
 
         Args:
-            df (pandas.DataFrame): The dataframe to visualize.
+            data_path (str): Path to the CSV file containing data to plot.
             image_path (str, optional): If provided, the plot will be saved
             to this path. Otherwise, the plot will be shown directly.
             Defaults to None.
+            threshold (int): Minimum Levenshtein distance score (0-100) to
+            consider a match. Defaults to 90.
+            empty (bool): If True, shows rows with no values. Defaults to
+            False.
             width (int): Width of the figure in inches. Defaults to 60.
             height (int): Height of the figure in inches. Defaults to 30.
         """
+
+        df = pd.read_csv(data_path, index_col=0, dtype={0: str})
+        df = (df >= threshold).astype(int)
+
+        if not empty:
+            df = df.loc[~(df == 0).all(axis=1)]
 
         plt.rcParams["font.family"] = "Times New Roman"
         plt.rcParams["font.size"] = "9"
