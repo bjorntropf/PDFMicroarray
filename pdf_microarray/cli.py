@@ -25,7 +25,7 @@ def cli():
 
 P_INPUT = "Path to the directory containing the PDF documents."
 P_OUTPUT = "Path where processed text segments will be stored."
-P_SKIP = "Whether to skip the processing of files that have already been \
+P_SKIP = "If enabled, skips the processing of files that have already been \
 processed. Defaults to False."
 P_THREADS = "Number of threads to use for concurrent processing. Defaults \
 to using all available CPU cores (-1)."
@@ -34,7 +34,7 @@ to using all available CPU cores (-1)."
 @cli.command()
 @click.option("-i", "--input", type=DIR, required=True, help=P_INPUT)
 @click.option("-o", "--output", type=DIR, required=True, help=P_OUTPUT)
-@click.option("--skip", type=bool, default=False, help=P_SKIP)
+@click.option("--skip", is_flag=True, default=False, help=P_SKIP)
 @click.option("--threads", type=int, default=-1, help=P_THREADS)
 def process(input, output, skip, threads):
     """
