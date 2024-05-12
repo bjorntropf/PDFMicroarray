@@ -74,7 +74,8 @@ Defaults to False."
 L_SPLIT = "Maximum number of rows each generated plot should have. \
 Defaults to 60."
 L_HEIGHT = "Height of the generated plot in inches. Defaults to 30."
-L_OUTPUT = "Optional path to save the generated plot image as a PNG file."
+L_OUTPUT = "Optional path to save the generated plot image as a png, pdf or \
+svg file."
 
 
 @cli.command()
