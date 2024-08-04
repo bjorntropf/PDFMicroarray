@@ -1,5 +1,7 @@
 # PDFMicroarray
 
+[![DOI](https://zenodo.org/badge/783346888.svg)](https://zenodo.org/doi/10.5281/zenodo.13208313)
+
 ## Overview
 
 PDFMicroarray is a Python CLI tool designed to assist with literature research for scientific papers and books.
